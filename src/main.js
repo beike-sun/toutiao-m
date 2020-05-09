@@ -7,6 +7,7 @@ import 'vant/lib/index.css'
 // 自动设置rem基准值（html标签字体大小）
 import 'amfe-flexible'
 import './styles/icon.css'
+import './styles/index.css'
 Vue.use(Vant)
 Vue.config.productionTip = false
 new Vue({
