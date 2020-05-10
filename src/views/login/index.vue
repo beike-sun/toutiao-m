@@ -45,6 +45,7 @@
 
 <script>
 import { login } from '@/api/user.js'
+import { Toast } from 'vant'
 export default {
   name: 'LoginIndex',
   data () {
@@ -56,15 +57,18 @@ export default {
     }
   },
   methods: {
-    onSubmit (values) {
-      console.log('submit', values)
-    },
     async onLogin () {
+      Toast.loading({
+        message: '加载中...',
+        forbidClick: true,
+        duration: 0
+      })
       try {
         const res = await login(this.user)
         console.log(res)
+        Toast.success('登录成功')
       } catch (err) {
-        console.log('登录失败', err)
+        Toast.fail('登录失败，手机号或验证码失败')
       }
     }
   }
