@@ -35,9 +35,10 @@
   >
     <template #button>
     <van-count-down
-     :time="1000*60"
+     :time="1000*6"
      format="ss s"
      v-if="isCountDown"
+     @finish="isCountDown=false"
        />
     <van-button
       v-else
@@ -46,7 +47,6 @@
       class="send-btn"
       :loading="isSendSmsLoading"
       @click.prevent="onSendSms"
-      @finish="isCountDown=false"
       >获取验证码</van-button>
   </template>
   </van-field>
@@ -85,7 +85,7 @@ export default {
         ],
         code: [
           { required: true, message: '验证码不能为空' },
-          { pattern: /^d{6}$/, message: '验证码格式错误' }
+          { pattern: /^\d{6}$/, message: '验证码格式错误' }
         ]
       }
     }
@@ -101,6 +101,7 @@ export default {
         const res = await login(this.user)
         console.log(res)
         Toast.success('登录成功')
+        this.$store.commit('setUser', res.data.data)
       } catch (err) {
         Toast.fail('登录失败，手机号或验证码失败')
       }
