@@ -11,6 +11,7 @@
 <van-form
 :show-error ="false"
 :show-error-message ="false"
+ ref="login-form"
  validate-first="true"
  @submit="onLogin"
  @failed ="onFailed"
@@ -33,10 +34,12 @@
     :rules="formRules.code"
   >
     <template #button>
+    <van-count-down :time="1000*60" format="ss s" />
     <van-button
      size="small"
       round
       class="send-btn"
+      @click.prevent="onSendSms"
       >获取验证码</van-button>
   </template>
   </van-field>
@@ -53,7 +56,10 @@
 </template>
 
 <script>
-import { login } from '@/api/user.js'
+import {
+  login,
+  sendSms
+} from '@/api/user.js'
 import { Toast } from 'vant'
 export default {
   name: 'LoginIndex',
@@ -90,7 +96,7 @@ export default {
         Toast.fail('登录失败，手机号或验证码失败')
       }
     },
-    //
+    // 点击登录，自定义提示错误信息
     onFailed (error) {
       if (error.errors[0]) {
         Toast(
@@ -100,12 +106,33 @@ export default {
           }
         )
       }
+    },
+    async onSendSms () {
+      // 发送验证码，校验手机号，向后台发请求，得到成功的请求之后，隐藏‘发送验证码’创建显示倒计时
+      try {
+        await this.$refs['login-form'].validate('mobile')
+        // 验证通过发请求
+        const resData = await sendSms(this.user.mobile)
+        console.log(resData)
+      } catch (err) {
+        let message = ''
+        if (err && err.response && err.response.status === 429) {
+          message = '发送太频繁，请稍后重试'
+        } else if (err.name === 'mobile') {
+          // 表单验证失败给出的错误提示
+          message = err.message
+        } else {
+          // 未知错误
+          message = '发送失败，请稍后重试'
+        }
+        Toast(
+          {
+            message,
+            position: 'bottom'
+          }
+        )
+      }
     }
-    // onSendCode () {
-    //   this.$refs['login-form'].validate('mobile').then(data => {
-    //     console.log(data)
-    //   })
-    // }
   }
 }
 </script>
