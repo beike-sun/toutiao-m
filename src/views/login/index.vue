@@ -8,12 +8,20 @@
       @click-left="$router.back()"
 />
     <!-- 表单 -->
-<van-cell-group>
+<van-form
+:show-error ="false"
+:show-error-message ="false"
+ validate-first="true"
+ @submit="onLogin"
+ @failed ="onFailed"
+ >
   <van-field
     v-model="user.mobile"
     icon-prefix="icon"
     left-icon="shouji"
+    name='mobile'
     placeholder="请输入手机号"
+    :rules="formRules.mobile"
   />
   <van-field
     v-model="user.code"
@@ -21,6 +29,8 @@
     icon-prefix="icon"
     left-icon="yanzhengma"
     placeholder="请输入验证码"
+    name='code'
+    :rules="formRules.code"
   >
     <template #button>
     <van-button
@@ -30,16 +40,15 @@
       >获取验证码</van-button>
   </template>
   </van-field>
-</van-cell-group>
-<!-- 底部 -->
+  <!-- 底部 -->
 <div class="login-btn-wrap">
   <van-button
    type="info"
     block
     class="login-btn"
-    @click="onLogin()"
     >登录</van-button>
 </div>
+</van-form>
   </div>
 </template>
 
@@ -53,6 +62,16 @@ export default {
       user: {
         mobile: '',
         code: ''
+      },
+      formRules: {
+        mobile: [
+          { required: true, message: '手机号码不能为空' },
+          { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '手机号格式错误' }
+        ],
+        code: [
+          { required: true, message: '验证码不能为空' },
+          { pattern: /^d{6}$/, message: '验证码格式错误' }
+        ]
       }
     }
   },
@@ -70,7 +89,23 @@ export default {
       } catch (err) {
         Toast.fail('登录失败，手机号或验证码失败')
       }
+    },
+    //
+    onFailed (error) {
+      if (error.errors[0]) {
+        Toast(
+          {
+            message: error.errors[0].message,
+            position: top
+          }
+        )
+      }
     }
+    // onSendCode () {
+    //   this.$refs['login-form'].validate('mobile').then(data => {
+    //     console.log(data)
+    //   })
+    // }
   }
 }
 </script>
