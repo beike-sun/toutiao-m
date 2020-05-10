@@ -34,8 +34,14 @@
     :rules="formRules.code"
   >
     <template #button>
-    <van-count-down :time="1000*60" format="ss s" />
+    <van-count-down
+     :time="1000*60"
+      format="ss s"
+      v-if="isCountDown"
+      @finish="isCountDown=false"
+       />
     <van-button
+    v-else
      size="small"
       round
       class="send-btn"
@@ -69,6 +75,7 @@ export default {
         mobile: '',
         code: ''
       },
+      isCountDown: false,
       formRules: {
         mobile: [
           { required: true, message: '手机号码不能为空' },
@@ -113,6 +120,7 @@ export default {
         await this.$refs['login-form'].validate('mobile')
         // 验证通过发请求
         const resData = await sendSms(this.user.mobile)
+        this.isCountDown = true
         console.log(resData)
       } catch (err) {
         let message = ''
