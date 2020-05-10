@@ -36,16 +36,17 @@
     <template #button>
     <van-count-down
      :time="1000*60"
-      format="ss s"
-      v-if="isCountDown"
-      @finish="isCountDown=false"
+     format="ss s"
+     v-if="isCountDown"
        />
     <van-button
-    v-else
+      v-else
      size="small"
       round
       class="send-btn"
+      :loading="isSendSmsLoading"
       @click.prevent="onSendSms"
+      @finish="isCountDown=false"
       >获取验证码</van-button>
   </template>
   </van-field>
@@ -76,6 +77,7 @@ export default {
         code: ''
       },
       isCountDown: false,
+      isSendSmsLoading: false,
       formRules: {
         mobile: [
           { required: true, message: '手机号码不能为空' },
@@ -119,9 +121,9 @@ export default {
       try {
         await this.$refs['login-form'].validate('mobile')
         // 验证通过发请求
-        const resData = await sendSms(this.user.mobile)
+        this.isSendSmsLoading = true
+        await sendSms(this.user.mobile)
         this.isCountDown = true
-        console.log(resData)
       } catch (err) {
         let message = ''
         if (err && err.response && err.response.status === 429) {
@@ -140,6 +142,7 @@ export default {
           }
         )
       }
+      this.isSendSmsLoading = false
     }
   }
 }
