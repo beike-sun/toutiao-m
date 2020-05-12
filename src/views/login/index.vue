@@ -101,6 +101,8 @@ export default {
         const res = await login(this.user)
         console.log(res)
         Toast.success('登录成功')
+        // 登录成功之后，返回原来页面
+        this.$router.back()
         this.$store.commit('setUser', res.data.data)
       } catch (err) {
         Toast.fail('登录失败，手机号或验证码失败')

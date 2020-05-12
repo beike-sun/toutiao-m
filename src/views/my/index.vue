@@ -1,6 +1,6 @@
 <template>
   <div class="my-container">
-    <van-cell-group class="my-info">
+    <van-cell-group class="my-info" v-if="user">
   <van-cell
    title="单元格"
     center
@@ -39,6 +39,13 @@
   </van-grid-item>
 </van-grid>
 </van-cell-group>
+<!-- 未登录状态下的样式 -->
+<div v-else class="not-login">
+  <div @click="$router.push('./login')">
+     <img src="./mobile.png" alt="" class="mobile">
+  </div>
+  <div class="text">登录 / 注册</div>
+</div>
 <!-- 收藏历史 -->
 <van-cell-group>
   <van-cell  value="内容" class="nav-gird" >
@@ -152,5 +159,23 @@ export default {
 .login-out{
   margin-top: 4px;
   color: #d86262;
+}
+// 未登录状态下的样式
+.not-login{
+  height:180px;
+  background: url('banner.png') no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .mobile{
+  width: 66px;
+  height: 66px;
+  }
+  .text{
+    color: #fff;
+    font-size: 14px;
+  }
 }
 </style>
