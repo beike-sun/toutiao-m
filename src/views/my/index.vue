@@ -2,7 +2,6 @@
   <div class="my-container">
     <van-cell-group class="my-info" v-if="user">
   <van-cell
-   title="单元格"
     center
     class="base-info"
     :border="false"
@@ -12,9 +11,9 @@
       round
       class="avatar"
       fit="cover"
-      src="https://img.yzcdn.cn/vant/cat.jpeg"
+      :src="userMessage.photo"
 />
-   <div slot="title" class="nickname">用户昵称</div>
+   <div slot="title" class="nickname">{{userMessage.name}}</div>
    <van-button
    round
    class="editBtn"
@@ -22,19 +21,19 @@
  </van-cell>
 <van-grid :border="false" class="data-info">
   <van-grid-item  text="文字" >
-    <div slot="text" class="number">167372</div>
+    <div slot="text" class="number">{{userMessage.art_count}}</div>
     <div slot="text" class="title">头条</div>
   </van-grid-item>
   <van-grid-item  text="文字" >
-     <div slot="text" class="number">5</div>
+     <div slot="text" class="number">{{userMessage.follow_count}}</div>
     <div slot="text" class="title">关注</div>
   </van-grid-item>
   <van-grid-item  text="文字" >
-     <div slot="text" class="number">278</div>
+     <div slot="text" class="number">{{userMessage.fans_count}}</div>
     <div slot="text" class="title">粉丝</div>
   </van-grid-item>
   <van-grid-item  text="文字" >
-     <div slot="text" class="number">1172</div>
+     <div slot="text" class="number">{{userMessage.like_count}}</div>
     <div slot="text" class="title">获赞</div>
   </van-grid-item>
 </van-grid>
@@ -73,11 +72,21 @@
 
 <script>
 import { mapState } from 'vuex'
+import { getLoginUser } from '@/api/user'
 export default {
   name: 'MyIndex',
+  data () {
+    return {
+      userMessage: {}
+    }
+  },
   computed: {
     // 将容器中的共享数据映射到本地
     ...mapState(['user'])
+  },
+  created () {
+    // 获取登录的用户信息
+    this.loadUserM()
   },
   methods: {
     onLogout () {
@@ -93,6 +102,11 @@ export default {
         .catch(() => {
           // on cancel
         })
+    },
+    async loadUserM () {
+      const data = await getLoginUser()
+      console.log(data)
+      this.userMessage = data.data.data
     }
   }
 }
