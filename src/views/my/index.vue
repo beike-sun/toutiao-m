@@ -1,25 +1,26 @@
 <template>
   <div class="my-container">
-    <van-cell-group>
+    <van-cell-group class="my-info">
   <van-cell
    title="单元格"
     center
+    class="base-info"
+    :border="false"
      >
     <van-image
       slot="icon"
       round
-      width="50px"
-      height="50px"
+      class="avatar"
       fit="cover"
       src="https://img.yzcdn.cn/vant/cat.jpeg"
 />
    <div slot="title" class="nickname">用户昵称</div>
    <van-button
    round
-   size="mini"
+   class="editBtn"
    >编辑资料</van-button>
  </van-cell>
-<van-grid>
+<van-grid :border="false" class="data-info">
   <van-grid-item  text="文字" >
     <div slot="text" class="number">167372</div>
     <div slot="text" class="title">头条</div>
@@ -39,36 +40,117 @@
 </van-grid>
 </van-cell-group>
 <!-- 收藏历史 -->
-<van-grid :column-num="2" icon-size="20px">
+<van-cell-group>
+  <van-cell  value="内容" class="nav-gird" >
+    <van-grid :column-num="2" >
   <van-grid-item icon="star-o" text="文字">
-    <div slot="text" class="collect">收藏</div>
+    <div slot="text" class="van-grid-item-text">收藏</div>
   </van-grid-item>
   <van-grid-item icon="browsing-history-o"  text="文字">
-        <div slot="text" class="collect">历史</div>
+        <div slot="text" class="van-grid-item-text">历史</div>
   </van-grid-item>
 </van-grid>
-<van-cell  class="user" title="小智同学" is-link />
-<van-button type="default" block="">退出登录</van-button>
+  </van-cell>
+</van-cell-group>
+<van-cell  class="message" title="消息通知" is-link />
+<van-cell   title="小智同学" is-link />
+<van-button
+  type="default"
+  block
+  class="login-out"
+  v-if="user"
+    >退出登录</van-button>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'MyIndex'
+  name: 'MyIndex',
+  computed: {
+    // 将容器中的共享数据映射到本地
+    ...mapState(['user'])
+  }
 }
 </script>
 
-<style>
+<style lang="less">
+.my-info{
+  background: url('banner.png') no-repeat;
+  background-size: cover;
+}
+.base-info{
+  background-color: unset;
+  box-sizing: border-box;
+  height: 115px;
+  padding-top: 38px;
+  padding-bottom: 11px;
+}
+.van-grid-item{
+  height: 65px;
+}
+ .avatar{
+   box-sizing: border-box;
+  margin-right: 11px;
+  width: 66px;
+  height: 66px;
+  border: 1px solid #fff;
+ }
+.van-grid-item__content {
+  background-color: unset;
+}
+.nickname{
+  color: #fff;
+  font-size: 15px;
+}
+.editBtn{
+  height: 16px;
+  color: #8c8c8c;
+  font-size: 10px;
+}
+.data-info{
+  height: 65px;
+}
 .number{
   font-size: 18px;
+    color: #fff;
 }
 .title{
   font-size: 12px;
+    color: #fff;
 }
 .collect{
   font-size: 14px;
 }
-.user{
-  margin: 4px 0;
+.login-bt{
+  color: #d86262;
+}
+/* 收藏历史样式部分 */
+.nav-gird{
+  height: 70px;
+  .van-icon-star-o{
+    font-size: 22px;
+    color: #ee6a6b;
+  }
+  .collect{
+    font-size: 10px;
+  }
+  .van-icon-browsing-history-o{
+    font-size: 22px;
+    color: #ffae44;
+  }
+  .van-grid-item-text{
+    font-size: 10px;
+    color: #333333;
+  }
+}
+// 消息通知与小智部分
+.message{
+  margin-top: 4px;
+  padding-left: 16px;
+}
+.login-out{
+  margin-top: 4px;
+  color: #d86262;
 }
 </style>
