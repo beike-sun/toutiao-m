@@ -66,6 +66,7 @@
   block
   class="login-out"
   v-if="user"
+  @click="onLogout"
     >退出登录</van-button>
   </div>
 </template>
@@ -77,6 +78,22 @@ export default {
   computed: {
     // 将容器中的共享数据映射到本地
     ...mapState(['user'])
+  },
+  methods: {
+    onLogout () {
+      // 点击退出弹出提示框
+      this.$dialog.confirm({
+        title: '用户确认',
+        message: '退出当前头条账号,将不能同步收藏'
+      })
+        .then(() => {
+          // 确认退出执行这里清除用户登录状态state.user即修改state,通过提交mutation实现
+          this.$store.commit('setUser', null)
+        })
+        .catch(() => {
+          // on cancel
+        })
+    }
   }
 }
 </script>
