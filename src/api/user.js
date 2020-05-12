@@ -1,6 +1,6 @@
 import request from '@/utlis/request.js'
 // 在非组件中通过加载容器获取共享数据状态
-import store from '@/store/'
+// import store from '@/store/'
 // 获取登录接口
 export const login = data => {
   return request({
@@ -20,9 +20,10 @@ export const sendSms = mobile => {
 export const getLoginUser = () => {
   return request({
     method: 'GET',
-    url: '/app/v1_0/user',
-    headers: {
-      Authorization: `Bearer ${store.state.user.token}`
-    }
+    url: '/app/v1_0/user'
+    // 通过请求拦截器统一处理
+    // headers: {
+    //   Authorization: `Bearer ${store.state.user.token}`
+    // }
   })
 }
