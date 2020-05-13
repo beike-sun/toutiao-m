@@ -5,6 +5,7 @@
   :finished="finished"
   finished-text="没有更多了"
   @load="onLoad"
+  class="van-list"
 >
   <van-cell v-for="item in list" :key="item" :title="item" />
 </van-list>
@@ -50,5 +51,12 @@ export default {
 </script>
 
 <style>
-
+.van-list{
+    position: fixed;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    bottom: 50px;
+    top: 91px;
+}
 </style>
