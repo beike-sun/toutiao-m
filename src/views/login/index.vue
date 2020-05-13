@@ -35,7 +35,7 @@
   >
     <template #button>
     <van-count-down
-     :time="1000*6"
+     :time="1000*60"
      format="ss s"
      v-if="isCountDown"
      @finish="isCountDown=false"

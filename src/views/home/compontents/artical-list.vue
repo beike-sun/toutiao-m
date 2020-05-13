@@ -16,6 +16,7 @@
    <artical-item
     v-for="(artical, index) in articals"
     :key="index"
+    :artical="artical"
    ></artical-item>
   <!-- <van-cell
    v-for="(artical, index) in articals"
