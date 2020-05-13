@@ -20,10 +20,10 @@
 </div>
       </div>
       </div>
-      <div slot="label">
+      <div slot="label" class="label-wrap">
         <span>{{artical.aut_name}}</span>
-        <span>{{artical.comm_count}}</span>
-        <bdspan>{{artical.pubdate}}</bdspan>
+        <span>{{artical.comm_count}}评论</span>
+        <span>{{artical.pubdate | relativeTime}}</span>
       </div>
       <div slot="default">
         <van-image
@@ -80,5 +80,12 @@ export default {
     height: 73px;
     margin-right: 2px;
   }
+}
+.label-wrap{
+  font-size: 12px;
+   color: #b4b4b4;
+   span{
+     margin-right: 12px;
+   }
 }
 </style>
