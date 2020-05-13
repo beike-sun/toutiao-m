@@ -13,10 +13,14 @@
  :success-text="successText"
  success-duration="1500"
    >
-  <van-cell
+   <artical-item
+    v-for="(artical, index) in articals"
+    :key="index"
+   ></artical-item>
+  <!-- <van-cell
    v-for="(artical, index) in articals"
    :key="index"
-   :title="artical.title" />
+   :title="artical.title" /> -->
 </van-pull-refresh>
 </van-list>
   </div>
@@ -24,8 +28,12 @@
 
 <script>
 import { getChannelsNew } from '@/api/artical.js'
+import ArticalItem from '@/components/artical-item'
 export default {
   name: 'channelArticalIndex',
+  components: {
+    ArticalItem
+  },
   props: {
     channel: {
       type: Object,
