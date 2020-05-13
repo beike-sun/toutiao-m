@@ -4,17 +4,18 @@
       <div slot="title" class="title-text van-multi-ellipsis--l3">{{artical.title}}</div>
       <div slot="label">
       <div
-       class="cover-item"
+       class="cover-wrap"
         v-if="artical.cover.type=== 3"
 >
 <div
  v-for="(img, index) in artical.cover.images"
   :key="index"
-  class="cover-wrap"
+  class="cover-wrap-item"
   >
 <van-image
         fit="cover"
         :src="img"
+        class="cover-item"
 />
 </div>
       </div>
@@ -53,8 +54,12 @@ export default {
   font-size: 16px;
   color: #3a3a3a;
 }
-.van-cell__value{
+.van-cell__title{
   flex: unset;
+  height: 73px;
+}
+.van-cell__value{
+  flex: 1;
    width: 116px;
   height: 73px;
   margin-left: 12px;
@@ -63,12 +68,17 @@ export default {
   width: 116px;
   height: 73px;
 }
-.cover-item{
+.cover-wrap{
   display: flex;
-  .cover-wrap{
+  .cover-wrap-item{
     flex: 1;
+    height: 73px;
+    margin-right: 2px;
+  }
+  .cover-item{
     width: 100%;
     height: 73px;
+    margin-right: 2px;
   }
 }
 </style>
