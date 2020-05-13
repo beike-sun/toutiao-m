@@ -88,4 +88,14 @@ export default {
      margin-right: 12px;
    }
 }
+.van-tabs__line{
+  width: 15px !important;
+  height: 3px;
+  background: #3296fa;
+  margin-bottom: 4px;
+}
+.van-tab{
+  border-right: 1px solid #edeff3;
+  border-bottom: 2px solid #edeff3;
+}
 </style>
