@@ -10,12 +10,47 @@
    class="search-box"
    >搜索</van-button>
 </van-nav-bar>
+<!-- 文章频道部分 -->
+<van-tabs v-model="active">
+  <van-tab
+   :title="channel.name"
+   v-for="channel in channels"
+   :key="channel.id"
+   >
+   <!-- 一个频道对应一个组件，通过其传入对应频道名字获取对应频道数据列表 -->
+   <artical-list
+   :channel="channel"
+   ></artical-list>
+   </van-tab>
+</van-tabs>
   </div>
 </template>
 
 <script>
+import { getChannels } from '@/api/user'
+// 对其子组件加载、注册、再使用
+import articalList from './compontents/artical-list'
 export default {
-  name: 'HomeIndex'
+  name: 'HomeIndex',
+  components: {
+    articalList
+  },
+  data () {
+    return {
+      active: 2,
+      channels: []
+    }
+  },
+  created () {
+    this.loadChannels()
+  },
+  methods: {
+    async loadChannels () {
+      const data = await getChannels()
+      // console.log(data)
+      this.channels = data.data.data.channels
+    }
+  }
 }
 </script>
 
