@@ -7,7 +7,17 @@
   @load="onLoad"
   class="van-list"
 >
-  <van-cell v-for="(artical, index) in articals" :key="index" :title="artical.title" />
+<van-pull-refresh
+ v-model="isRefreshLoading"
+ @refresh="onRefresh"
+ :success-text="successText"
+ success-duration="1500"
+   >
+  <van-cell
+   v-for="(artical, index) in articals"
+   :key="index"
+   :title="artical.title" />
+</van-pull-refresh>
 </van-list>
   </div>
 </template>
@@ -28,7 +38,9 @@ export default {
       loading: false,
       finished: false,
       // 下一页时间戳
-      timestamp: null
+      timestamp: null,
+      isRefreshLoading: false,
+      successText: ''
     }
   },
   methods: {
@@ -39,7 +51,7 @@ export default {
         timestamp: this.timestamp || Date.now(),
         with_top: 1
       })
-      console.log(data)
+      //   console.log(data)
       // 2将数据放到文章列表中
       const { results } = data.data.data
       this.articals.push(...results)
@@ -51,6 +63,21 @@ export default {
       } else {
         this.finished = true
       }
+    },
+    async onRefresh () {
+      const data = await getChannelsNew({
+        channel_id: this.channel.id,
+        timestamp: Date.now(),
+        with_top: 1
+      })
+      //   console.log(data)
+      // 2将数据放到文章列表中
+      const { results } = data.data.data
+      this.articals.unshift(...results)
+      // 3停止加载
+      this.isRefreshLoading = false
+      // 4给出更新提示
+      this.successText = `更新了${results.length}条数据`
     }
   }
 }
