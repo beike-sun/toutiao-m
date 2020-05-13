@@ -46,9 +46,9 @@ export default {
   },
   methods: {
     async loadChannels () {
-      const data = await getChannels()
+      const { data } = await getChannels()
       // console.log(data)
-      this.channels = data.data.data.channels
+      this.channels = data.data.channels
     }
   }
 }

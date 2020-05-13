@@ -7,12 +7,13 @@
   @load="onLoad"
   class="van-list"
 >
-  <van-cell v-for="item in list" :key="item" :title="item" />
+  <van-cell v-for="(artical, index) in articals" :key="index" :title="artical.title" />
 </van-list>
   </div>
 </template>
 
 <script>
+import { getChannelsNew } from '@/api/artical.js'
 export default {
   name: 'channelArticalIndex',
   props: {
@@ -23,28 +24,33 @@ export default {
   },
   data () {
     return {
-      list: [],
+      articals: [],
       loading: false,
-      finished: false
+      finished: false,
+      // 下一页时间戳
+      timestamp: null
     }
   },
   methods: {
-    onLoad () {
-      // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-
-        // 加载状态结束
-        this.loading = false
-
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true
-        }
-      }, 1000)
+    async onLoad () {
+    //  1获取接口数据
+      const data = await getChannelsNew({
+        channel_id: this.channel.id,
+        timestamp: this.timestamp || Date.now(),
+        with_top: 1
+      })
+      console.log(data)
+      // 2将数据放到文章列表中
+      const { results } = data.data.data
+      this.articals.push(...results)
+      // 3停止加载
+      this.loading = false
+      if (results.length) {
+        //   4如果还有下一页数据，加载下一页时间戳数据
+        this.timestamp = data.data.data.pre_timestamp
+      } else {
+        this.finished = true
+      }
     }
   }
 }
