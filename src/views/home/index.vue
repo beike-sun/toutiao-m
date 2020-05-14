@@ -17,12 +17,33 @@
    v-for="channel in channels"
    :key="channel.id"
    >
-   <!-- 一个频道对应一个组件，通过其传入对应频道名字获取对应频道数据列表 -->
+   <!-- 一个频道对应一个组件，通过其传入对应频道名字获取对应频道数据列表部分 -->
    <artical-list
    :channel="channel"
    ></artical-list>
    </van-tab>
+   <div
+    slot="nav-right"
+    class="wap-nav-placehodel"
+    ></div>
+      <div
+       slot="nav-right"
+       class="wap-nav-icon"
+ >
+    <van-icon
+     name="wap-nav"
+     @click="isPopupshow=true"
+      />
+  </div>
 </van-tabs>
+<van-popup
+  v-model="isPopupshow"
+  position="bottom"
+  get-container="body"
+  closeable
+  close-icon-position="top-left"
+  :style="{ height: '100%' }"
+    />
   </div>
 </template>
 
@@ -38,7 +59,8 @@ export default {
   data () {
     return {
       active: 0,
-      channels: []
+      channels: [],
+      isPopupshow: false
     }
   },
   created () {
@@ -74,5 +96,28 @@ export default {
   .van-button_text{
     font-size: 14px;
   }
+}
+// 图标样式
+.wap-nav-placehodel{
+  width: 33px;
+   flex-shrink: 0;
+}
+.wap-nav-icon{
+  position: fixed;
+  height: 42px;
+  line-height: 42px;
+  right: 0;
+  background-color: #fff;
+  opacity: .9;
+    // &:before {
+    //   content: ' ';
+    //   // width: 3px;
+    //   // height: 29px;
+    //   background: url('渐变.png') no-repeat;
+    //   background-size: cover;
+    // }
+   .van-icon {
+      font-size: 24px;
+    }
 }
 </style>
