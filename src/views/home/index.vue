@@ -43,7 +43,9 @@
   closeable
   close-icon-position="top-left"
   :style="{ height: '100%' }"
-    />
+    >
+    <channel-edit></channel-edit>
+    </van-popup>
   </div>
 </template>
 
@@ -51,16 +53,18 @@
 import { getChannels } from '@/api/user'
 // 对其子组件加载、注册、再使用
 import articalList from './compontents/artical-list'
+import channelEdit from './compontents/channel-edit'
 export default {
   name: 'HomeIndex',
   components: {
-    articalList
+    articalList,
+    channelEdit
   },
   data () {
     return {
       active: 0,
       channels: [],
-      isPopupshow: false
+      isPopupshow: true
     }
   },
   created () {
