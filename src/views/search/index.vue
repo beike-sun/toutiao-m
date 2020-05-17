@@ -13,6 +13,7 @@
          <search-result
          v-if="isResultShow"
          class="search-result"
+         :search-text = "searchText"
          ></search-result>
          <!-- 联想栏 -->
          <search-think

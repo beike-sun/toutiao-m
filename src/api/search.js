@@ -9,3 +9,11 @@ export const getThinkList = q => {
     }
   })
 }
+// 获取搜索结果列表
+export const getResultList = params => {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/search',
+    params
+  })
+}
