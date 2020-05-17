@@ -35,9 +35,11 @@
 <van-grid :gutter="10">
   <van-grid-item
    class="grid-item"
-   v-for="(allChannel,index ) in recommendChannels"
+   v-for="(channel,index ) in recommendChannels"
    :key="index"
-   :text="allChannel.name" />
+   :text="channel.name"
+   @click="onAdd(channel)"
+    />
 </van-grid>
   </div>
 </template>
@@ -75,6 +77,9 @@ export default {
     async onLoadAllChannel () {
       const data = await getAllChannels()
       this.allChannels = data.data.data.channels
+    },
+    onAdd (channel) {
+      this.userChannels.push(channel)
     }
   }
 }
