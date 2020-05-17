@@ -17,6 +17,7 @@
          <!-- 联想栏 -->
          <search-think
          v-else-if="searchText"
+         :search-text="searchText"
          ></search-think>
          <!-- 历史记录栏 -->
          <search-history
