@@ -35,9 +35,9 @@
 <van-grid :gutter="10">
   <van-grid-item
    class="grid-item"
-   v-for="value in 8"
-   :key="value"
-   text="文字" />
+   v-for="(allChannel,index ) in recommendChannels"
+   :key="index"
+   :text="allChannel.name" />
 </van-grid>
   </div>
 </template>
@@ -55,6 +55,17 @@ export default {
   data () {
     return {
       allChannels: []
+    }
+  },
+  computed: {
+    recommendChannels () {
+      // 使用filter过滤满足条件的所有元素，根据方法返回的布尔值true来收集数据
+      return this.allChannels.filter(channel => {
+      //  find方法查找满足条件的单个元素
+        return !this.userChannels.find(userChannel => {
+          return userChannel.id === channel.id
+        })
+      })
     }
   },
   created () {
