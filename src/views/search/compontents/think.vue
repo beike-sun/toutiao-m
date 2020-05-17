@@ -11,6 +11,7 @@
 
 <script>
 import { getThinkList } from '@/api/search'
+import { debounce } from 'lodash'
 export default {
   name: 'thinkIndex',
   props: {
@@ -26,11 +27,16 @@ export default {
   },
   watch: {
     searchText: {
-      async handler () {
+      handler: debounce(async function () {
         const data = await getThinkList(this.searchText)
         // console.log(data)
         this.thinkList = data.data.data.options
-      },
+      }, 200),
+      // async handler () {
+      //   const data = await getThinkList(this.searchText)
+      //   // console.log(data)
+      //   this.thinkList = data.data.data.options
+      // },
       immediate: true
     }
   }
