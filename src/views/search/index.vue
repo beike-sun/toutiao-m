@@ -7,13 +7,21 @@
         show-action
         @search="onSearch"
         @cancel="$router.back()"
+        @focus="isResultShow=false"
          />
+        <!-- 搜索结果栏 -->
+         <search-result
+         v-if="isResultShow"
+         class="search-result"
+         ></search-result>
          <!-- 联想栏 -->
-         <search-think></search-think>
+         <search-think
+         v-else-if="searchText"
+         ></search-think>
          <!-- 历史记录栏 -->
-         <search-history></search-history>
-         <!-- 搜索结果栏 -->
-         <search-result></search-result>
+         <search-history
+         v-else
+         ></search-history>
   </div>
 </template>
 
@@ -30,17 +38,25 @@ export default {
   },
   data () {
     return {
-      searchText: ''
+      searchText: '',
+      isResultShow: false
     }
   },
   methods: {
     onSearch () {
-      console.log('搜索')
+      this.isResultShow = true
     }
   }
 }
 </script>
 
 <style>
-
+.search-result{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 54px;
+    bottom: 0;
+    overflow: auto
+}
 </style>
