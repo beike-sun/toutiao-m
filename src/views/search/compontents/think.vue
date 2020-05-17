@@ -1,11 +1,12 @@
 <template>
   <div id="think-container">
      <van-cell
-      :title="think"
       icon="search"
       v-for="(think, index) in thinkList"
       :key="index"
-        />
+        >
+        <div slot="title" v-html="hightlight(think)"></div>
+        </van-cell>
   </div>
 </template>
 
@@ -38,6 +39,14 @@ export default {
       //   this.thinkList = data.data.data.options
       // },
       immediate: true
+    }
+  },
+  methods: {
+    hightlight (think) {
+      return think.replace(
+        new RegExp(this.searchText, 'gi'),
+        `<span style="color: red">${this.searchText}</span>`
+      )
     }
   }
 }
