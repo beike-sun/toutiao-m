@@ -105,7 +105,7 @@ export default {
     },
     async loadUserM () {
       const data = await getLoginUser()
-      console.log(data)
+      // console.log(data)
       this.userMessage = data.data.data
     }
   }
