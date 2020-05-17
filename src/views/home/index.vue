@@ -8,6 +8,7 @@
    type="info"
    icon="search"
    class="search-box"
+   to="/search"
    >搜索</van-button>
 </van-nav-bar>
 <!-- 文章频道部分 -->
