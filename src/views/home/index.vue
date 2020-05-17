@@ -44,7 +44,12 @@
   close-icon-position="top-left"
   :style="{ height: '100%' }"
     >
-    <channel-edit :user-channels="channels"></channel-edit>
+    <channel-edit
+     :user-channels="channels"
+     :active="active"
+     @close="isPopupshow = false"
+     @update-active="onUpdateActive"
+     ></channel-edit>
     </van-popup>
   </div>
 </template>
@@ -75,6 +80,9 @@ export default {
       const { data } = await getChannels()
       // console.log(data)
       this.channels = data.data.channels
+    },
+    onUpdateActive (index) {
+      this.active = index
     }
   }
 }

@@ -20,6 +20,7 @@
 <van-grid :gutter="10" >
   <van-grid-item
    class="grid-item"
+   :class="{ active: index === active }"
    :icon="(isEdit && index !== 0) ? 'clear' : ''"
    v-for="(channel, index) in userChannels"
    :key="index"
@@ -48,12 +49,21 @@
 </template>
 
 <script>
-import { getAllChannels } from '@/api/channels.js'
+import {
+  getAllChannels,
+  addUserChannel
+} from '@/api/channels.js'
+import { mapState } from 'vuex'
+import { setItem } from '@/utlis/storage'
 export default {
   name: 'channelEditIndex',
   props: {
     userChannels: {
       type: Array,
+      required: true
+    },
+    active: {
+      type: Number,
       required: true
     }
   },
@@ -64,6 +74,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     recommendChannels () {
       // 使用filter过滤满足条件的所有元素，根据方法返回的布尔值true来收集数据
       return this.allChannels.filter(channel => {
@@ -82,8 +93,21 @@ export default {
       const data = await getAllChannels()
       this.allChannels = data.data.data.channels
     },
-    onAdd (channel) {
+    async onAdd (channel) {
       this.userChannels.push(channel)
+      // 使添加的数据持久化
+      if (this.user) {
+        // 将添加的数据存储在线上，使之切换设备之后任然获取原来的数据
+        await addUserChannel({
+          channels: [
+            { id: channel.id, seq: this.userChannels.length }
+          ]
+        })
+      } else {
+        // 将添加的数据存储在本地
+        console.log('本地存储')
+        setItem('user-channels', this.userChannels)
+      }
     },
     onUserChannelClick (index) {
       if (this.isEdit && index !== 0) {
@@ -95,10 +119,15 @@ export default {
       }
     },
     deleteChannel (index) {
+      if (index <= this.active) {
+        // 更新激活频道的索引
+        this.$emit('update-active', this.active - 1)
+      }
       this.userChannels.splice(index, 1)
     },
     switchChannel (index) {
-      console.log('切换频道')
+      this.$emit('close')
+      this.$emit('update-active', index)
     }
   }
 }
@@ -135,5 +164,10 @@ background-color: #f4f5f6;
 }
  .van-grid-item__content {
     position: relative;
+}
+.active{
+ /deep/ .van-grid-item__text{
+    color: red !important;
+  }
 }
 </style>
