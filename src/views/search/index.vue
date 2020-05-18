@@ -38,7 +38,7 @@ import {
   setItem,
   getItem
 } from '@/utlis/storage'
-import { getSearchHistory } from '@/api/search'
+// import { getSearchHistory } from '@/api/search'
 import { mapState } from 'vuex'
 export default {
   name: 'searchIndex',
@@ -77,13 +77,13 @@ export default {
     async loadHistoryResult () {
       // 加载搜索历史结果
       // 如果未登录获取本地结果
-      let searchHistory = getItem('searchHistories') || []
+      const searchHistory = getItem('searchHistories') || []
       // 如果用户已登录
-      if (this.user) {
-        const data = await getSearchHistory()
-        console.log(data.data.data.keywords)
-        searchHistory = [...new Set([...searchHistory, ...data.data.data.keywords])]
-      }
+      // if (this.user) {
+      // const data = await getSearchHistory()
+      // console.log(data.data.data.keywords)
+      // searchHistory = [...new Set([...searchHistory, ...data.data.data.keywords])]
+      // }
       console.log(searchHistory)
       this.searchHistories = searchHistory
     }

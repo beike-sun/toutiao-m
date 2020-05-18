@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { setItem } from '@/utlis/storage.js'
 export default {
   name: 'historyIndex',
   props: {
@@ -44,8 +45,10 @@ export default {
     onDeleteHistory (history, index) {
       // 先判断是删除状态还是不删除状态
       if (this.isDeleteShow) {
-        return this.searchHistories.splice(index, 1)
+        this.searchHistories.splice(index, 1)
         // 删除后处理数据持久化
+        setItem('search-histories', this.searchHistories)
+        return
       }
       // 如果不是删除状态，点击单元格获取搜索结果
       this.$emit('search', history)
