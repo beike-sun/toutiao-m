@@ -2,7 +2,7 @@
   <div id="history-container">
   <van-cell title="历史记录" value="内容" >
       <div  v-if="isDeleteShow">
-          <span>全部删除   </span>
+          <span @click="$emit('delete-histories', [])">全部删除   </span>
           <span @click="isDeleteShow=false">完成</span>
       </div>
       <van-icon

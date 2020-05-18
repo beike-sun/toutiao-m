@@ -26,6 +26,7 @@
          v-else
          :searchHistories="searchHistories"
          @search="onSearch"
+         @delete-histories="searchHistories=$event"
          ></search-history>
   </div>
 </template>
@@ -49,6 +50,11 @@ export default {
   },
   computed: {
     ...mapState(['user'])
+  },
+  watch: {
+    searchHistories () {
+      setItem('search-histories', this.searchHistories)
+    }
   },
   data () {
     return {
@@ -84,7 +90,7 @@ export default {
       // console.log(data.data.data.keywords)
       // searchHistory = [...new Set([...searchHistory, ...data.data.data.keywords])]
       // }
-      console.log(searchHistory)
+      // console.log(searchHistory)
       this.searchHistories = searchHistory
     }
   }
