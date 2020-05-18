@@ -33,6 +33,12 @@
 import searchThink from './compontents/think'
 import searchHistory from './compontents/history'
 import searchResult from './compontents/result'
+import {
+  setItem,
+  getItem
+} from '@/utlis/storage'
+import { getSearchHistory } from '@/api/search'
+import { mapState } from 'vuex'
 export default {
   name: 'searchIndex',
   components: {
@@ -40,12 +46,18 @@ export default {
     searchHistory,
     searchResult
   },
+  computed: {
+    ...mapState(['user'])
+  },
   data () {
     return {
       searchText: '',
       isResultShow: false,
       searchHistories: []
     }
+  },
+  created () {
+    this.loadHistoryResult()
   },
   methods: {
     onSearch (searchText) {
@@ -58,6 +70,21 @@ export default {
       }
       //  把最新历史结果放在顶部
       this.searchHistories.unshift(searchText)
+      // 将搜索结果数据持久化
+      setItem('searchHistories', this.searchHistories)
+    },
+    async loadHistoryResult () {
+      // 加载搜索历史结果
+      // 如果未登录获取本地结果
+      let searchHistory = getItem('searchHistories') || []
+      // 如果用户已登录
+      if (this.user) {
+        const data = await getSearchHistory()
+        console.log(data.data.data.keywords)
+        searchHistory = [...new Set([...searchHistory, ...data.data.data.keywords])]
+      }
+      console.log(searchHistory)
+      this.searchHistories = searchHistory
     }
   }
 }
