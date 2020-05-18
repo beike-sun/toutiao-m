@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="artical-list">
  <van-list
   v-model="loading"
   :finished="finished"
