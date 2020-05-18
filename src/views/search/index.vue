@@ -24,6 +24,7 @@
          <!-- 历史记录栏 -->
          <search-history
          v-else
+         :searchHistories="searchHistories"
          ></search-history>
   </div>
 </template>
@@ -42,13 +43,21 @@ export default {
   data () {
     return {
       searchText: '',
-      isResultShow: false
+      isResultShow: false,
+      searchHistories: []
     }
   },
   methods: {
     onSearch (searchText) {
       this.searchText = searchText
       this.isResultShow = true
+      const index = this.searchHistories.indexOf(searchText)
+      if (index !== -1) {
+      // 不等于-1说明有重复文本
+        this.searchHistories.splice(index, 1)
+      }
+      //  把最新历史结果放在顶部
+      this.searchHistories.unshift(searchText)
     }
   }
 }

@@ -6,10 +6,12 @@
           <span>完成</span>
       </div>
   </van-cell>
-    <van-cell title="hello" value="内容" >
-     <van-icon name="close" />
-    </van-cell>
-    <van-cell title="hi" value="内容" >
+    <van-cell
+     :title="history"
+      value="内容"
+      v-for="(history, index) in searchHistories"
+      :key="index"
+       >
      <van-icon name="close" />
     </van-cell>
   </div>
@@ -17,7 +19,13 @@
 
 <script>
 export default {
-  name: 'historyIndex'
+  name: 'historyIndex',
+  props: {
+    searchHistories: {
+      type: Array,
+      required: true
+    }
+  }
 }
 </script>
 
