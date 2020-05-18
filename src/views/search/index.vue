@@ -25,6 +25,7 @@
          <search-history
          v-else
          :searchHistories="searchHistories"
+         @search="onSearch"
          ></search-history>
   </div>
 </template>
