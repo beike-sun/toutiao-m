@@ -5,7 +5,7 @@
        v-model="searchText"
         placeholder="请输入搜索关键词"
         show-action
-        @search="onSearch"
+        @search="onSearch(searchText)"
         @cancel="$router.back()"
         @focus="isResultShow=false"
          />
@@ -19,6 +19,7 @@
          <search-think
          v-else-if="searchText"
          :search-text="searchText"
+         @search="onSearch"
          ></search-think>
          <!-- 历史记录栏 -->
          <search-history
@@ -45,7 +46,8 @@ export default {
     }
   },
   methods: {
-    onSearch () {
+    onSearch (searchText) {
+      this.searchText = searchText
       this.isResultShow = true
     }
   }

@@ -4,6 +4,7 @@
       icon="search"
       v-for="(think, index) in thinkList"
       :key="index"
+     @click="$emit('search', think)"
         >
         <div slot="title" v-html="hightlight(think)"></div>
         </van-cell>
