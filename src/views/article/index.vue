@@ -9,35 +9,27 @@
 />
 <!-- 详情文章标题 -->
 <div class="user-info">
-<h1>牛逼程序员都用的开源工具，你用了几个?</h1>
+<h1>{{article.title}}</h1>
 <van-cell center >
   <div slot="icon">
     <van-image
     class="avatar"
   fit="cover"
   round
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
+  :src="article.aut_photo"
 />
   </div>
-  <div slot="title" class="title">天涯小型客</div>
-  <div slot="label" class="pudate">14小时前</div>
+  <div slot="title" class="title">{{article.aut_name}}</div>
+  <div slot="label" class="pudate">{{article.pubdate | relativeTime}}</div>
   <van-button
   class="attention"
   round
-  icon="plus"
-   type="info"
+   :icon="article.is_followed? ' ': 'plus '"
+   :type="article.is_followed ? 'default': 'info'"
    size="small"
-   >关注</van-button>
+   >{{article.is_followed? '已关注': '关注'}}</van-button>
 </van-cell>
-<div class="markdown-body">
-  <p>hello</p>
-  <ul>
-    <li>12</li>
-    <li>12</li>
-    <li>12</li>
-    <li>12</li>
-    <li>12</li>
-  </ul>
+<div class="markdown-body" v-html="article.content">
 </div>
 </div>
   </div>
@@ -54,13 +46,19 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      article: {}
+    }
+  },
   created () {
     this.loadUserArtical()
   },
   methods: {
     async loadUserArtical () {
       const data = await getUserArtical(this.articleId)
-      console.log(data)
+      // console.log(data)
+      this.article = data.data.data
     }
   }
 }
