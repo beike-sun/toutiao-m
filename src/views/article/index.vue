@@ -27,6 +27,8 @@
    :icon="article.is_followed? ' ': 'plus '"
    :type="article.is_followed ? 'default': 'info'"
    size="small"
+   :loading="isFollowLoading"
+   @click="onFollow"
    >{{article.is_followed? '已关注': '关注'}}</van-button>
 </van-cell>
 <div class="markdown-body" v-html="article.content" ref="article-content">
@@ -39,6 +41,7 @@
 import './github-markdown.css'
 import { getUserArtical } from '@/api/artical'
 import { ImagePreview } from 'vant'
+import { followUser, unfollowUser } from '@/api/user'
 export default {
   name: 'articleIndex',
   props: {
@@ -49,7 +52,8 @@ export default {
   },
   data () {
     return {
-      article: {}
+      article: {},
+      isFollowLoading: false
     }
   },
   created () {
@@ -70,7 +74,7 @@ export default {
       // console.log(articleContent)
       // 获取到内容容器中的所有img标签
       const imgs = articleContent.querySelectorAll('img')
-      console.log(imgs)
+      // console.log(imgs)
       // 给img标签进行点击事件注册
       const imgPaths = []
       imgs.forEach((img, index) => {
@@ -84,6 +88,21 @@ export default {
         }
       })
       // 使用vant提供的图片预览
+    },
+    async onFollow () {
+      this.isFollowLoading = true
+      // 点击判断是否关注，如果关注，则发送不关注请求接口，反之，发送关注请求接口
+      if (this.article.is_followed) {
+        // 已关注，请求取消
+        await unfollowUser(this.article.aut_id)
+        // this.article.is_followed = false
+      } else {
+        // 未关注，请求关注
+        await followUser(this.article.aut_id)
+        // this.article.is_followed = true
+      }
+      this.article.is_followed = !this.article.is_followed
+      this.isFollowLoading = false
     }
   }
 }
