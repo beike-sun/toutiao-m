@@ -29,7 +29,7 @@
    size="small"
    >{{article.is_followed? '已关注': '关注'}}</van-button>
 </van-cell>
-<div class="markdown-body" v-html="article.content">
+<div class="markdown-body" v-html="article.content" ref="article-content">
 </div>
 </div>
   </div>
@@ -38,6 +38,7 @@
 <script>
 import './github-markdown.css'
 import { getUserArtical } from '@/api/artical'
+import { ImagePreview } from 'vant'
 export default {
   name: 'articleIndex',
   props: {
@@ -59,9 +60,34 @@ export default {
       const data = await getUserArtical(this.articleId)
       // console.log(data)
       this.article = data.data.data
+      this.$nextTick(() => {
+        this.handlePreviewImgs()
+      })
+    },
+    handlePreviewImgs () {
+      // 获取文章内容容器
+      const articleContent = this.$refs['article-content']
+      // console.log(articleContent)
+      // 获取到内容容器中的所有img标签
+      const imgs = articleContent.querySelectorAll('img')
+      console.log(imgs)
+      // 给img标签进行点击事件注册
+      const imgPaths = []
+      imgs.forEach((img, index) => {
+        imgPaths.push(img.src)
+        img.onclick = function () {
+          ImagePreview({
+            images: imgPaths, // 预览图片路径列表
+            startPosition: index, // 起始位置
+            showIndicators: true
+          })
+        }
+      })
+      // 使用vant提供的图片预览
     }
   }
 }
+
 </script>
 
 <style  lang="less">
