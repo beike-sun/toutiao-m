@@ -7,3 +7,10 @@ export const getChannelsNew = params => {
     params
   })
 }
+// 获取文章详情
+export const getUserArtical = articalId => {
+  return request({
+    method: 'GET',
+    url: `/app/v1_0/articles/${articalId}`
+  })
+}

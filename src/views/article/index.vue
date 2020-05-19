@@ -3,6 +3,7 @@
 <!-- 导航栏 -->
 <van-nav-bar
   class="nav-bar"
+  title="文章详情"
   left-arrow
   @click-left="$router.back()"
 />
@@ -44,15 +45,23 @@
 
 <script>
 import './github-markdown.css'
+import { getUserArtical } from '@/api/artical'
 export default {
   name: 'articleIndex',
   props: {
     articleId: {
-      type: String,
+      type: [String, Number, Object],
       required: true
     }
   },
+  created () {
+    this.loadUserArtical()
+  },
   methods: {
+    async loadUserArtical () {
+      const data = await getUserArtical(this.articleId)
+      console.log(data)
+    }
   }
 }
 </script>
@@ -61,8 +70,11 @@ export default {
 .nav-bar{
   background-color: #3296fa;
   height: 48px;
+.van-nav-bar__title{
+  color: #fff;
+}
  .van-icon-arrow-left::before {
-    color: #ffff;
+    color: #fff;
     font-size: 20px;
 }
 }
