@@ -33,7 +33,10 @@
 </van-cell>
 <div class="markdown-body" v-html="article.content" ref="article-content">
 </div>
+ <!-- 评论 -->
+        <comment-list></comment-list>
 </div>
+<!-- 底部区域 -->
   <van-cell class="article-bottom" center >
      <div slot="title">
        <van-button
@@ -56,8 +59,8 @@
          :name="article.is_collected? 'star':'star-o'"
          @click="onCollect"
           ></van-icon>
+          <!-- 分享 -->
         <van-icon name="share"></van-icon>
-
 </div>
   </van-cell>
   </div>
@@ -65,6 +68,7 @@
 
 <script>
 import './github-markdown.css'
+import CommentList from './compontents/comment-list'
 import {
   getUserArtical,
   collectArtical,
@@ -81,6 +85,9 @@ export default {
       type: [String, Number, Object],
       required: true
     }
+  },
+  components: {
+    CommentList
   },
   data () {
     return {
@@ -191,8 +198,13 @@ export default {
 }
 }
 .user-info{
-  background-color: #fff;
-  margin-top: -14px;
+ background-color: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 48px;
+    bottom: 50px;
+    overflow-y: auto;
   .van-cell{
   margin-bottom: 27px;
   }
