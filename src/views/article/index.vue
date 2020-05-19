@@ -9,7 +9,7 @@
 <!-- 详情文章标题 -->
 <div class="user-info">
 <h1>牛逼程序员都用的开源工具，你用了几个?</h1>
-<van-cell center>
+<van-cell center >
   <div slot="icon">
     <van-image
     class="avatar"
@@ -28,11 +28,22 @@
    size="small"
    >关注</van-button>
 </van-cell>
+<div class="markdown-body">
+  <p>hello</p>
+  <ul>
+    <li>12</li>
+    <li>12</li>
+    <li>12</li>
+    <li>12</li>
+    <li>12</li>
+  </ul>
+</div>
 </div>
   </div>
 </template>
 
 <script>
+import './github-markdown.css'
 export default {
   name: 'articleIndex',
   props: {
@@ -56,6 +67,11 @@ export default {
 }
 }
 .user-info{
+  background-color: #fff;
+  margin-top: -14px;
+  .van-cell{
+  margin-bottom: 27px;
+  }
   h1{
     font-size: 20px;
     color: #3a3a3a;
@@ -78,5 +94,8 @@ export default {
     width: 85px;
     height: 29px;
   }
+}
+.markdown-body{
+  padding: 0 20px;
 }
 </style>
