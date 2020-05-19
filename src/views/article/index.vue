@@ -34,7 +34,9 @@
 <div class="markdown-body" v-html="article.content" ref="article-content">
 </div>
  <!-- 评论 -->
-        <comment-list></comment-list>
+        <comment-list
+        :source="articleId"
+        ></comment-list>
 </div>
 <!-- 底部区域 -->
   <van-cell class="article-bottom" center >
