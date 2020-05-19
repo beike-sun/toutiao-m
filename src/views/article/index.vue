@@ -43,11 +43,16 @@
         round
         size="small"
         >写评论</van-button>
-        <van-icon name="good-job-o" />
+        <!-- 点赞 -->
+        <van-icon
+         :color="article.attitude ===1? 'purple' :'#777 '"
+         :name="article.attitude === 1? 'good-job':'good-job-o'"
+         @click="onAttitude"
+          ></van-icon>
         <van-icon name="comment-o" />
         <!-- 收藏 -->
         <van-icon
-         :color="article.is_collected?'purple':' '"
+         :color="article.is_collected?'purple':'#777'"
          :name="article.is_collected? 'star':'star-o'"
          @click="onCollect"
           ></van-icon>
@@ -63,7 +68,9 @@ import './github-markdown.css'
 import {
   getUserArtical,
   collectArtical,
-  uncollectArtical
+  uncollectArtical,
+  ArticalLike,
+  unArticalLike
 } from '@/api/artical'
 import { ImagePreview } from 'vant'
 import { followUser, unfollowUser } from '@/api/user'
@@ -149,6 +156,22 @@ export default {
       this.article.is_collected = !this.article.is_collected
       this.isCollectLoading = false
       this.$toast.success(`${this.article.is_collected ? '' : '取消'}收藏成功`)
+    },
+    async onAttitude () {
+      this.$toast.loading({
+        message: '加载中...',
+        forbidClick: true
+      })
+      if (this.article.attitude === 1) {
+        // 等于1表示已点赞,则请求取消点赞
+        await unArticalLike(this.articleId)
+        this.article.attitude = -1
+      } else {
+        // 没有点赞,请求点赞
+        await ArticalLike(this.articleId)
+        this.article.attitude = 1
+      }
+      this.$toast.success(`${this.article.attitude === 1 ? '' : '取消'}点赞成功`)
     }
   }
 }
