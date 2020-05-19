@@ -34,6 +34,22 @@
 <div class="markdown-body" v-html="article.content" ref="article-content">
 </div>
 </div>
+  <van-cell class="article-bottom" center >
+     <div slot="title">
+       <van-button
+       class="comment-button"
+        plain
+        type="default"
+        round
+        size="small"
+        >写评论</van-button>
+        <van-icon name="good-job-o" />
+        <van-icon name="comment-o" />
+        <van-icon name="star-o" />
+        <van-icon name="share"></van-icon>
+
+</div>
+  </van-cell>
   </div>
 </template>
 
@@ -152,5 +168,22 @@ export default {
 }
 .markdown-body{
   padding: 0 20px;
+}
+.article-bottom{
+  height: 43px;
+  line-height: 43px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  .comment-button{
+    width: 141px;
+    height: 23px;
+    font-size: 14px;
+    color: #a7a7a7;
+  }
+  .van-icon{
+    font-size: 20px;
+    margin: 0 15px;
+  }
 }
 </style>
