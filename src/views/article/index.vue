@@ -45,7 +45,12 @@
         >写评论</van-button>
         <van-icon name="good-job-o" />
         <van-icon name="comment-o" />
-        <van-icon name="star-o" />
+        <!-- 收藏 -->
+        <van-icon
+         :color="article.is_collected?'purple':' '"
+         :name="article.is_collected? 'star':'star-o'"
+         @click="onCollect"
+          ></van-icon>
         <van-icon name="share"></van-icon>
 
 </div>
@@ -55,7 +60,11 @@
 
 <script>
 import './github-markdown.css'
-import { getUserArtical } from '@/api/artical'
+import {
+  getUserArtical,
+  collectArtical,
+  uncollectArtical
+} from '@/api/artical'
 import { ImagePreview } from 'vant'
 import { followUser, unfollowUser } from '@/api/user'
 export default {
@@ -69,7 +78,8 @@ export default {
   data () {
     return {
       article: {},
-      isFollowLoading: false
+      isFollowLoading: false,
+      isCollectLoading: false
     }
   },
   created () {
@@ -119,6 +129,26 @@ export default {
       }
       this.article.is_followed = !this.article.is_followed
       this.isFollowLoading = false
+    },
+    async onCollect () {
+      this.isCollectLoading = true
+      this.$toast.loading({
+        message: '加载中...',
+        forbidClick: true
+      })
+      // 点击判断是否关注，如果关注，则发送不关注请求接口，反之，发送关注请求接口
+      if (this.article.is_collected) {
+        // 已收藏，请求取消收藏
+        await uncollectArtical(this.articleId)
+        // this.article.is_followed = false
+      } else {
+        // 未收藏，请求收藏
+        await collectArtical(this.articleId)
+        // this.article.is_followed = true
+      }
+      this.article.is_collected = !this.article.is_collected
+      this.isCollectLoading = false
+      this.$toast.success(`${this.article.is_collected ? '' : '取消'}收藏成功`)
     }
   }
 }
@@ -170,8 +200,7 @@ export default {
   padding: 0 20px;
 }
 .article-bottom{
-  height: 43px;
-  line-height: 43px;
+  height: 50px;
   position: fixed;
   bottom: 0;
   left: 0;

@@ -14,3 +14,20 @@ export const getUserArtical = articalId => {
     url: `/app/v1_0/articles/${articalId}`
   })
 }
+// 收藏文章
+export const collectArtical = collectArticalId => {
+  return request({
+    method: 'POST',
+    url: '/app/v1_0/article/collections',
+    data: {
+      target: collectArticalId
+    }
+  })
+}
+// 取消收藏文章
+export const uncollectArtical = uncollectArticalId => {
+  return request({
+    method: 'DELETE',
+    url: `/app/v1_0/article/collections/${uncollectArticalId}`
+  })
+}
