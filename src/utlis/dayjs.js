@@ -9,3 +9,7 @@ dayjs.locale('zh-cn')
 Vue.filter('relativeTime', value => {
   return dayjs().to(dayjs(value))
 })
+// 处理时间格式
+Vue.filter('dateFormat', (value, format = 'YY-MM-DD HH:mm:ss') => {
+  return dayjs(value).format(format)
+})

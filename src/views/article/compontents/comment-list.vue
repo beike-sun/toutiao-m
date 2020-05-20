@@ -11,6 +11,7 @@
 <comment-item
 v-for="(comment, index) in commentList"
 :key="index"
+:comment="comment"
 ></comment-item>
   <!-- <van-cell
    v-for="(comment, index) in commentList"
