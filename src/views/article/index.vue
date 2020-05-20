@@ -70,23 +70,10 @@
   <van-popup
    v-model="ispopupShow"
    position="bottom"
-   class="postComment"
    >
-  <!-- 多文本输入框 -->
-  <van-field
-  v-model="message"
-  rows="2"
-  autosize
-  type="textarea"
-  maxlength="50"
-  placeholder="优质评论会被优先展示"
-  show-word-limit
-/>
-<!-- 发布按钮 -->
-<van-button
- type="default"
- size="small"
- >发布</van-button>
+  <post-comment
+  :target="articleId"
+  ></post-comment>
   </van-popup>
   </div>
 </template>
@@ -103,6 +90,7 @@ import {
 } from '@/api/artical'
 import { ImagePreview } from 'vant'
 import { followUser, unfollowUser } from '@/api/user'
+import PostComment from './compontents/post-comment'
 export default {
   name: 'articleIndex',
   props: {
@@ -112,7 +100,8 @@ export default {
     }
   },
   components: {
-    CommentList
+    CommentList,
+    PostComment
   },
   data () {
     return {
@@ -279,9 +268,5 @@ export default {
     font-size: 20px;
     margin: 0 15px;
   }
-}
-.postComment{
-  display: flex;
-  align-items: center;
 }
 </style>
