@@ -47,6 +47,7 @@
         type="default"
         round
         size="small"
+        @click="onpopupShow"
         >写评论</van-button>
         <!-- 点赞 -->
         <van-icon
@@ -65,6 +66,28 @@
         <van-icon name="share"></van-icon>
 </div>
   </van-cell>
+  <!-- 发布评论 -->
+  <van-popup
+   v-model="ispopupShow"
+   position="bottom"
+   class="postComment"
+   >
+  <!-- 多文本输入框 -->
+  <van-field
+  v-model="message"
+  rows="2"
+  autosize
+  type="textarea"
+  maxlength="50"
+  placeholder="优质评论会被优先展示"
+  show-word-limit
+/>
+<!-- 发布按钮 -->
+<van-button
+ type="default"
+ size="small"
+ >发布</van-button>
+  </van-popup>
   </div>
 </template>
 
@@ -95,7 +118,9 @@ export default {
     return {
       article: {},
       isFollowLoading: false,
-      isCollectLoading: false
+      isCollectLoading: false,
+      ispopupShow: false,
+      message: ''
     }
   },
   created () {
@@ -181,6 +206,9 @@ export default {
         this.article.attitude = 1
       }
       this.$toast.success(`${this.article.attitude === 1 ? '' : '取消'}点赞成功`)
+    },
+    onpopupShow () {
+      this.ispopupShow = true
     }
   }
 }
@@ -251,5 +279,9 @@ export default {
     font-size: 20px;
     margin: 0 15px;
   }
+}
+.postComment{
+  display: flex;
+  align-items: center;
 }
 </style>
