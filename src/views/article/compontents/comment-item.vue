@@ -11,9 +11,16 @@
  <div slot="title">
      <div class="commentFirst-row">
          <p>{{comment.aut_name}}</p>
-         <div class="like">
+         <div
+          class="like"
+           @click="onCommentLike"
+           >
         <!-- 点赞及点赞数 -->
-        <van-icon name="good-job-o" class="goodJob"></van-icon>
+        <van-icon
+         :name="comment.is_liking? 'good-job' : 'good-job-o'"
+         :color="comment.is_liking? 'purple':'#666666'"
+         class="goodJob"
+          ></van-icon>
         <span>{{comment.like_count}}</span>
          </div>
      </div>
@@ -31,12 +38,32 @@
 </template>
 
 <script>
+import { addCommentLike, deleteCommentLike } from '@/api/comment.js'
 export default {
   name: 'CommentItem',
   props: {
     comment: {
       type: [Object, String, Number],
       required: true
+    }
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    async onCommentLike () {
+      const commentId = this.comment.com_id.toString()
+      //   判断如果是点赞状态，请求取消点赞
+      if (this.comment.is_liking) {
+        await deleteCommentLike(commentId)
+        this.comment.like_count--
+      } else {
+      // 如果是无点赞状态，则请求点赞状态
+        await addCommentLike(commentId)
+        this.comment.like_count++
+      }
+      this.comment.is_liking = !this.comment.is_liking
     }
   }
 }
