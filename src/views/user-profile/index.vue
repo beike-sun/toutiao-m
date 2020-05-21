@@ -26,6 +26,7 @@
 <update-name
 @close="isNickShow = false"
 :nickname="user.name"
+@update-nickname="user.name = $event"
 ></update-name>
   </van-popup>
   </div>

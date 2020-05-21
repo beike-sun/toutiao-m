@@ -5,6 +5,7 @@
        left-text="取消"
        right-text="完成"
        @click-left="$emit('close')"
+       @click-right="onConfirm"
     />
     <van-field
        class="textbox"
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+import { updateUserProfile } from '@/api/user'
 export default {
   name: 'UpdateName',
   props: {
@@ -30,6 +32,21 @@ export default {
   data () {
     return {
       localName: this.nickname
+    }
+  },
+  methods: {
+    async onConfirm () {
+      this.$toast.loading({
+        message: '修改中...',
+        forbidClick: true
+      })
+      await updateUserProfile({
+        name: this.localName
+      })
+      this.$toast.success('修改成功')
+      //   关闭弹层
+      this.$emit('close')
+      this.$emit('update-nickname', this.localName)
     }
   }
 }
