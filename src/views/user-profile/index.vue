@@ -14,20 +14,37 @@
   :src="user.photo"
 />
 </van-cell>
-<van-cell title="昵称" is-link  :value="user.name"/>
+<van-cell title="昵称" is-link  :value="user.name" @click="isNickShow = true">
+</van-cell>
 <van-cell title="性别" is-link  :value="user.gender===0 ? '男' : '女'"/>
 <van-cell title="生日" is-link  :value="user.birthday"/>
+<van-popup
+ v-model="isNickShow"
+ position="bottom"
+ :style="{ height: '100%' }"
+   >
+<update-name
+@close="isNickShow = false"
+:nickname="user.name"
+></update-name>
+  </van-popup>
   </div>
 </template>
 
 <script>
 import { getUserProfile } from '@/api/user'
+import UpdateName from './compontents/update-name'
 export default {
   name: 'UserProfile',
+  components: {
+    UpdateName
+  },
   data () {
     return {
       // 用户信息数据
-      user: {}
+      user: {},
+      // 修改昵称的弹出框
+      isNickShow: true
     }
   },
   created () {
@@ -44,8 +61,8 @@ export default {
 </script>
 
 <style>
-html{
-  background: #f4f5f6;
+.van-popup{
+    background-color: #f4f5f6;
 }
 .userNewsTitle{
   background-color: #3296fa;
