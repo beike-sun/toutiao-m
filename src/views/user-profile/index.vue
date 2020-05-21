@@ -6,7 +6,18 @@
     left-arrow
     @click-left="$router.back()"
 />
-<van-cell title="头像" is-link center>
+<input
+   type="file"
+   hidden
+   accept="image/*"
+   ref="file"
+   @change="onChange"
+   >
+<van-cell
+  title="头像"
+  is-link
+  center
+  @click="$refs.file.click()" >
   <van-image
   class="avatar"
   round
@@ -99,6 +110,11 @@ export default {
       const data = await getUserProfile()
       // console.log(data)
       this.user = data.data.data
+    },
+    onChange () {
+      console.log('change')
+      // 清空
+      this.$refs.file.value = ''
     }
   }
 }
