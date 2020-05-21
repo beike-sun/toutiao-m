@@ -33,6 +33,10 @@ export default {
       type: [String, Number, Object],
       required: true
     },
+    type: {
+      type: String,
+      default: 'a'
+    },
     commentList: {
       type: [Array, String, Number, Object],
       default: function () {
@@ -57,8 +61,8 @@ export default {
     // 1获取评论接口
       const data = await getComment(
         {
-          type: 'a',
-          source: this.source,
+          type: this.type,
+          source: this.source.toString(),
           offset: this.offset,
           limit: this.limit
         }

@@ -12,15 +12,22 @@
 <comment-item
 :comment="comment"
 ></comment-item>
+<!-- 评论的评论列表项 -->
+<comment-list
+:source="comment.com_id"
+ type="c"
+></comment-list>
   </div>
 </template>
 
 <script>
 import CommentItem from './comment-item'
+import CommentList from './comment-list'
 export default {
   name: 'ReplyComment',
   components: {
-    CommentItem
+    CommentItem,
+    CommentList
   },
   props: {
     comment: {

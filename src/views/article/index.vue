@@ -87,8 +87,9 @@
   <van-popup
    v-model="isReplyShow"
     position="bottom"
-   :style="{ height: '30%' }" >
+   :style="{ height: '70%' }" >
    <reply-comment
+   v-if="isReplyShow"
    :comment="currentReplyComment"
    @close="isReplyShow=false"
    ></reply-comment>
