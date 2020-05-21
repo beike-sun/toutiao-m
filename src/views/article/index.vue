@@ -88,6 +88,10 @@
    v-model="isReplyShow"
     position="bottom"
    :style="{ height: '30%' }" >
+   <reply-comment
+   :comment="currentReplyComment"
+   @close="isReplyShow=false"
+   ></reply-comment>
    </van-popup>
   </div>
 </template>
@@ -105,6 +109,7 @@ import {
 import { ImagePreview } from 'vant'
 import { followUser, unfollowUser } from '@/api/user'
 import PostComment from './compontents/post-comment'
+import ReplyComment from './compontents/reply-comment'
 export default {
   name: 'articleIndex',
   props: {
@@ -115,7 +120,8 @@ export default {
   },
   components: {
     CommentList,
-    PostComment
+    PostComment,
+    ReplyComment
   },
   data () {
     return {
@@ -127,7 +133,9 @@ export default {
       // 文章评论列表
       commentList: [],
       totalCommentCount: 0,
-      isReplyShow: false
+      isReplyShow: false,
+      // 当前回复评论对象
+      currentReplyComment: {}
     }
   },
   created () {
@@ -222,8 +230,9 @@ export default {
       this.commentList.unshift(comment)
       this.ispopupShow = false
     },
-    replyComment () {
+    replyComment (comment) {
       this.isReplyShow = true
+      this.currentReplyComment = comment
     }
   }
 }
