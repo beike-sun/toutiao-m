@@ -37,6 +37,7 @@
         <comment-list
         :source="articleId"
         :commentList="commentList"
+        @total_count="totalCommentCount=$event"
         ></comment-list>
 </div>
 <!-- 底部区域 -->
@@ -56,7 +57,11 @@
          :name="article.attitude === 1? 'good-job':'good-job-o'"
          @click="onAttitude"
           ></van-icon>
-        <van-icon name="comment-o" />
+          <!-- 回复数量 -->
+        <van-icon
+         name="comment-o"
+         :info="totalCommentCount"
+          />
         <!-- 收藏 -->
         <van-icon
          :color="article.is_collected?'purple':'#777'"
@@ -113,7 +118,8 @@ export default {
       ispopupShow: false,
       message: '',
       // 文章评论列表
-      commentList: []
+      commentList: [],
+      totalCommentCount: 0
     }
   },
   created () {

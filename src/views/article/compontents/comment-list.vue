@@ -63,6 +63,8 @@ export default {
         }
       )
       console.log(data)
+      // 获取的评论数量
+      this.$emit('total_count', data.data.data.total_count)
       const results = data.data.data.results
       this.commentList.push(...results)
       // 2将获取的评论放到评论列表中
