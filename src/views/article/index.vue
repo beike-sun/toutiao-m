@@ -36,6 +36,7 @@
  <!-- 评论 -->
         <comment-list
         :source="articleId"
+        :commentList="commentList"
         ></comment-list>
 </div>
 <!-- 底部区域 -->
@@ -73,6 +74,7 @@
    >
   <post-comment
   :target="articleId"
+  @postCommentSuccess="onPostSuccess"
   ></post-comment>
   </van-popup>
   </div>
@@ -109,7 +111,9 @@ export default {
       isFollowLoading: false,
       isCollectLoading: false,
       ispopupShow: false,
-      message: ''
+      message: '',
+      // 文章评论列表
+      commentList: []
     }
   },
   created () {
@@ -198,6 +202,11 @@ export default {
     },
     onpopupShow () {
       this.ispopupShow = true
+    },
+    onPostSuccess (comment) {
+      // 发布评论成功后将评论内容放在评论列表项的第一个，清除弹层框
+      this.commentList.unshift(comment)
+      this.ispopupShow = false
     }
   }
 }

@@ -31,6 +31,12 @@ export default {
     source: {
       type: [String, Number, Object],
       required: true
+    },
+    commentList: {
+      type: [Array, String, Number, Object],
+      default: function () {
+        return []
+      }
     }
   },
   components: {
@@ -38,7 +44,7 @@ export default {
   },
   data () {
     return {
-      commentList: [],
+      // commentList: [],
       loading: false,
       finished: false,
       offset: null,

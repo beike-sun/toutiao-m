@@ -2,7 +2,7 @@
   <div class="postComment">
         <!-- 多文本输入框 -->
   <van-field
-  v-model="message"
+  v-model.trim="message"
   rows="3"
   autosize
   type="textarea"
@@ -40,12 +40,19 @@ export default {
   },
   methods: {
     async onPostComment () {
+      this.$toast.loading({
+        message: '发布中...',
+        forbidClick: true
+      })
       const data = await addComment({
         target: this.target.toString(),
         content: this.message,
         art_id: this.commentId ? this.commentId.toString() : null
       })
-      console.log(data)
+      //   console.log(data)
+      this.$emit('postCommentSuccess', data.data.data.new_obj)
+      this.$toast.success('发布成功')
+      this.message = ''
     }
   }
 }
