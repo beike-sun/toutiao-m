@@ -46,7 +46,7 @@ export default {
       this.$toast.success('修改成功')
       //   关闭弹层
       this.$emit('close')
-      this.$emit('input', this.localName)
+      this.$emit('input ', this.localName)
     }
   }
 }

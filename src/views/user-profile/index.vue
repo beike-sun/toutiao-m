@@ -24,6 +24,7 @@
  :style="{ height: '100%' }"
    >
 <update-name
+v-if="isNickShow"
 @close="isNickShow = false"
 v-model="user.name"
 @input="user.name = $event"
@@ -45,7 +46,7 @@ export default {
       // 用户信息数据
       user: {},
       // 修改昵称的弹出框
-      isNickShow: true
+      isNickShow: false
     }
   },
   created () {
