@@ -38,6 +38,7 @@
         :source="articleId"
         :commentList="commentList"
         @total_count="totalCommentCount=$event"
+        @reply-comment="replyComment"
         ></comment-list>
 </div>
 <!-- 底部区域 -->
@@ -82,6 +83,12 @@
   @postCommentSuccess="onPostSuccess"
   ></post-comment>
   </van-popup>
+  <!-- 回复评论 -->
+  <van-popup
+   v-model="isReplyShow"
+    position="bottom"
+   :style="{ height: '30%' }" >
+   </van-popup>
   </div>
 </template>
 
@@ -119,7 +126,8 @@ export default {
       message: '',
       // 文章评论列表
       commentList: [],
-      totalCommentCount: 0
+      totalCommentCount: 0,
+      isReplyShow: false
     }
   },
   created () {
@@ -213,6 +221,9 @@ export default {
       // 发布评论成功后将评论内容放在评论列表项的第一个，清除弹层框
       this.commentList.unshift(comment)
       this.ispopupShow = false
+    },
+    replyComment () {
+      this.isReplyShow = true
     }
   }
 }

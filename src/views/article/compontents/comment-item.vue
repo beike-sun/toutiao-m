@@ -28,7 +28,11 @@
  </div>
  <div slot="label" class="comment-bottom">
      <div class="comment-date">{{comment.pubdate | dateFormat('MM-DD HH:mm')}}</div>
-     <van-button type="default" size="mini" round>
+     <van-button
+      type="default"
+       size="mini"
+        round
+         @click="$emit('reply-comment', comment )">
          <span>{{comment.reply_count}}</span>
          <span>回复</span>
      </van-button>
