@@ -90,6 +90,7 @@
    :style="{ height: '70%' }" >
    <reply-comment
    v-if="isReplyShow"
+   :article-id="articleId"
    :comment="currentReplyComment"
    @close="isReplyShow=false"
    ></reply-comment>

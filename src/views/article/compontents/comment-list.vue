@@ -14,11 +14,6 @@ v-for="(comment, index) in commentList"
 :comment="comment"
 @reply-comment="$emit('reply-comment', $event)"
 ></comment-item>
-  <!-- <van-cell
-   v-for="(comment, index) in commentList"
-    :key="index"
-    :title="comment.content"
-     /> -->
 </van-list>
   </div>
 </template>
