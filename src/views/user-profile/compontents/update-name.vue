@@ -24,14 +24,14 @@ import { updateUserProfile } from '@/api/user'
 export default {
   name: 'UpdateName',
   props: {
-    nickname: {
+    value: {
       type: String,
       required: true
     }
   },
   data () {
     return {
-      localName: this.nickname
+      localName: this.value
     }
   },
   methods: {
@@ -46,7 +46,7 @@ export default {
       this.$toast.success('修改成功')
       //   关闭弹层
       this.$emit('close')
-      this.$emit('update-nickname', this.localName)
+      this.$emit('input', this.localName)
     }
   }
 }

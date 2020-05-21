@@ -25,8 +25,8 @@
    >
 <update-name
 @close="isNickShow = false"
-:nickname="user.name"
-@update-nickname="user.name = $event"
+v-model="user.name"
+@input="user.name = $event"
 ></update-name>
   </van-popup>
   </div>
