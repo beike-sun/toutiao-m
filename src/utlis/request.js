@@ -4,7 +4,8 @@ import jsonBig from 'json-bigint'
 import store from '@/store/'
 const request = axios.create({
   // 基础路径
-  baseURL: 'http://ttapi.research.itcast.cn/',
+  // baseURL: 'http://ttapi.research.itcast.cn/',
+  baseURL: 'http://api-toutiao-web.itheima.net',
   // transformResponse 允许自定义原始的响应数据（字符串）
   transformResponse: [function (data) {
     try {
