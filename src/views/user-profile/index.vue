@@ -82,9 +82,10 @@ v-model="user.name"
      :style="{ height: '100%' }"
    >
    <update-photo
+    v-if="isPhotoShow"
    :file="previewPhoto"
    @close="isPhotoShow = false"
-   @updatePhoto="user.photo = $event"
+   @update-photo="user.photo = $event"
    ></update-photo>
   </van-popup>
   </div>
