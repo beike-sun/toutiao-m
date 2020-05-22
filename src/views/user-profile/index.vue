@@ -75,6 +75,18 @@ v-model="user.name"
    @close="isBirthdayShow = false"
    ></update-birthday>
   </van-popup>
+  <!-- 更新头像的弹层 -->
+    <van-popup
+     v-model="isPhotoShow"
+     position="bottom"
+     :style="{ height: '100%' }"
+   >
+   <update-photo
+   :file="previewPhoto"
+   @close="isPhotoShow = false"
+   @updatePhoto="user.photo = $event"
+   ></update-photo>
+  </van-popup>
   </div>
 </template>
 
@@ -83,12 +95,14 @@ import { getUserProfile } from '@/api/user'
 import UpdateName from './compontents/update-name'
 import UpdateGender from './compontents/update-gender'
 import UpdateBirthday from './compontents/udate-birthday'
+import UpdatePhoto from './compontents/update-photo'
 export default {
   name: 'UserProfile',
   components: {
     UpdateName,
     UpdateGender,
-    UpdateBirthday
+    UpdateBirthday,
+    UpdatePhoto
   },
   data () {
     return {
@@ -99,7 +113,11 @@ export default {
       // 修改性别的弹出框
       isGenderShow: false,
       // 修改生日的弹层框
-      isBirthdayShow: false
+      isBirthdayShow: false,
+      // 修改用户头像的弹出框
+      isPhotoShow: false,
+      // 预览图片的src
+      previewPhoto: null
     }
   },
   created () {
@@ -112,7 +130,15 @@ export default {
       this.user = data.data.data
     },
     onChange () {
-      console.log('change')
+      // 当触发选中文件的时候，展示弹层、进行头像裁切、确认
+      // console.log('change')
+      // 展示弹出层
+      this.isPhotoShow = true
+      // 在弹出层中预览图片
+      // const blob = window.URL.createObjectURL(this.$refs.file.files[0])
+      const file = this.$refs.file.files[0]
+      // console.log(blob)
+      this.previewPhoto = file
       // 清空
       this.$refs.file.value = ''
     }
