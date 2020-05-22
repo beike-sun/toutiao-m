@@ -60,7 +60,10 @@
   </van-cell>
 </van-cell-group>
 <van-cell  class="message" title="消息通知" is-link />
-<van-cell   title="小智同学" is-link />
+<van-cell
+   title="小智同学"
+   to="/user/chat"
+    is-link />
 <van-button
   type="default"
   block
